@@ -15,6 +15,28 @@ import os
 import re
 import typing
 
+def get_node_from_country(country: str) -> str:
+    """
+       Convert the country name to country code.
+
+       :param country: The country name to convert.
+       :type country: str
+
+       :return: The country code corresponding to country name.
+       :rtype: str
+    """
+    try:
+        return {'belgium': 'be',
+                'france': 'fr',
+                'italy': 'it',
+                'japan': 'jp',
+                'spain': 'sp',
+                'switzerland': 'ch',
+                'usa': 'us'}[country.lower()]
+    except KeyError:
+        print(f'{country} not listed or unknown.')
+        return 'error'
+
 def get_current_node(torrc: typing.TextIO) -> str:
     """
        Get the current exit nodes (country) of the Tor browser.

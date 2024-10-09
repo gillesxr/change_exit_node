@@ -20,3 +20,17 @@ def test_get_current_node_with_multiple_nodes(setup_dir):
 
 def test_get_current_not_with_not_existing_file():
     assert get_current_node('not_a_file') == ''
+
+def test_get_node_from_country_with_known_countries():
+    countries_nodes = {'Belgium': 'be',
+                       'France': 'fr',
+                       'Italy': 'it',
+                       'Japan': 'jp',
+                       'Spain': 'sp',
+                       'Switzerland': 'ch',
+                       'USA': 'us'}
+    for country in countries_nodes.keys():
+        assert get_node_from_country(country) == countries_nodes[country]
+
+def test_get_node_from_country_with_unknown_country():
+    assert get_node_from_country('Germany') == 'error'
