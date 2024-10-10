@@ -6,11 +6,12 @@
  Manage the modification of the Tor browser exit node.
 
  :example:
- invoke exitto 'italy'
+ invoke exitto 'torrc' 'italy'
  
  .. moduleauthor:: gillesxr 2024 october 08
 """
 
+from invoke import task
 import os
 import re
 import typing
@@ -87,3 +88,17 @@ def get_current_node(torrc: typing.TextIO) -> str:
     except FileNotFoundError:
         print('Please give a valid torrc file!')
     return current_node
+
+@task(help={'torrc': 'Tor configuration file.', 'country': 'The exit node country name.'})
+def exitto(ctx, torrc: typing.TextIO, country: str) -> None:
+    """
+       Change the exit node in the torrc file.
+
+       :param torrc: The Tor browser configuration filename.
+       :type torrc: TextIO
+       :param country: The country name for the exit node.
+       :type country: str
+    """
+    country_code = get_node_from_country(country)
+    if change_node(torrc, country_code) == True:
+        print(f'New Tor exit node: {country!r}.')
