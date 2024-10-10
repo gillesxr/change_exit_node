@@ -47,31 +47,24 @@ def change_node(torrc: typing.TextIO, country_code: str) -> bool:
        :return: True if succeed else False
        :rtype: bool
     """
-    if country_code in countries_nodes.values():
-        line_number = 0
-        line_to_modify = ''
-        exit_nodes = None
-        offset = 0
-        try:
-            with open(torrc, 'r+') as fdesc:
-                for nb_line, line in enumerate(fdesc, 1):
-                    if 'ExitNodes' in line:
-                        line_number = nb_line
-                        line_to_modify = line
-                        exit_nodes = re.findall(r'{(\w+)}', line)
-                        break
-                    offset += len(line)
-                if line_number != 0:
-                    line_to_modify = line_to_modify.replace(f'{{{exit_nodes[0]}}}', f'{{{country_code}}}')
-                    fdesc.seek(offset)
-                    fdesc.write(line_to_modify)
-                    fdesc.flush()
-        except FileNotFoundError:
-            print('Please give a valid torrc file!')
-            return False
-        return True
-    else:
+    if country_code not in countries_nodes.values():
         return False
+    try:
+        with open(torrc, 'r+') as fdesc:
+           lines = fdesc.readlines()
+           for n_line, line in enumerate(lines):
+               if 'ExitNodes' in line:
+                   exit_nodes = re.findall(r'{(\w+)}', line)
+                   lines[n_line] = line.replace(f'{{{exit_nodes[0]}}}', f'{{{country_code}}}')
+                   break
+           fdesc.seek(0)
+           fdesc.writelines(lines)
+           fdesc.truncate()
+           fdesc.flush()
+    except FileNotFoundError:
+        print('Please give a valid torrc file!')
+        return False
+    return True
 
 def get_current_node(torrc: typing.TextIO) -> str:
     """

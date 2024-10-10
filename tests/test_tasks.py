@@ -14,6 +14,8 @@ def setup_dir():
 @pytest.fixture
 def setup_file(setup_dir):
     shutil.copy('./torrc.fortest.orig', './torrc.fortest')
+    yield None
+    os.remove('./torrc.fortest')
 
 def test_get_current_node_with_no_defined_node_name(setup_dir):
     assert get_current_node('empty_torrc') == ''
