@@ -15,7 +15,7 @@ def setup_dir():
 
 @pytest.fixture
 def setup_file(setup_dir):
-    shutil.copy('./torrc.fortest.orig', './torrc.fortest')
+    shutil.copy('./files/torrc.fortest.orig', './torrc.fortest')
     yield None
     os.remove('./torrc.fortest')
 
@@ -30,13 +30,13 @@ def mock_change_node():
         yield mock_change_node
 
 def test_get_current_node_with_no_defined_node_name(setup_dir):
-    assert get_current_node('empty_torrc') == ''
+    assert get_current_node('./files/empty_torrc') == ''
 
 def test_get_current_node_returns_specific_node(setup_dir):
-    assert get_current_node('italy_torrc') == 'it'
+    assert get_current_node('./files/italy_torrc') == 'it'
 
 def test_get_current_node_with_multiple_nodes(setup_dir):
-    assert get_current_node('multiple_nodes_torrc') == 'us'
+    assert get_current_node('./files/multiple_nodes_torrc') == 'us'
 
 def test_get_current_not_with_not_existing_file():
     assert get_current_node('not_a_file') == ''
