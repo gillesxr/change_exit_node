@@ -77,3 +77,17 @@ def test_exitto_print_about_the_new_node_after_modification(setup_file, mock_get
     mock_change_node.assert_called_once_with(torrc, 'fr')
     captured = capsys.readouterr()
     assert captured.out == "New Tor exit node: 'France'.\n"
+
+def test_get_country_from_known_node():
+    nodes_countries = {'be': 'Belgium',
+                       'ch': 'Switzerland',
+                       'fr': 'France',
+                       'it': 'Italy',
+                       'jp': 'Japan',
+                       'sp': 'Spain',
+                       'us': 'USA'}
+    for node in nodes_countries.keys():
+        assert get_country_from_node(node) == nodes_countries[node]
+
+def test_get_country_from_node_with_unknown_node():
+    assert get_country_from_node('hr') == 'error'

@@ -19,6 +19,8 @@ import typing
 # See 'https://b3rn3d.herokuapp.com/blog/2014/03/05/tor-country-codes' for full list.
 countries_nodes = {'belgium': 'be', 'france': 'fr', 'italy': 'it', 'japan': 'jp',
                    'spain': 'sp', 'switzerland': 'ch', 'usa': 'us'}
+nodes_countries = {'be': 'Belgium', 'ch': 'Switzerland', 'fr': 'France', 
+                   'it': 'Italy', 'jp': 'Japan', 'sp': 'Spain', 'us': 'USA'}
 
 def get_node_from_country(country: str) -> str:
     """
@@ -34,6 +36,22 @@ def get_node_from_country(country: str) -> str:
         return countries_nodes[country.lower()]
     except KeyError:
         print(f'{country} not listed or unknown.')
+        return 'error'
+
+def get_country_from_node(node: str) -> str:
+    """
+       Convert the country code to country name.
+
+       :param node: The country code to convert.
+       :type node: str
+
+       :return: The country name corresponding to country code.
+       :rtype: str
+    """
+    try:
+        return nodes_countries[node]
+    except KeyError:
+        print(f'{node} not listed or unknown.')
         return 'error'
 
 def change_node(torrc: typing.TextIO, country_code: str) -> bool:
