@@ -163,3 +163,5 @@ cython_debug/
 
 # vi swap file
 .*.py.swp
+.*.toml.swp
+
