@@ -91,3 +91,13 @@ def test_get_country_from_known_node():
 
 def test_get_country_from_node_with_unknown_node():
     assert get_country_from_node('hr') == 'error'
+
+def test_set_torrc_filepath_with_existing_file_returns_true(setup_dir):
+    assert set_torrc_filepath('./files/italy_torrc') == True
+
+def test_set_torrc_filepath_with_not_existing_file_returns_false():
+    assert set_torrc_filepath('not_a_file') == False
+
+def test_get_torrc_filepath_returns_path(setup_dir):
+    set_torrc_filepath('./files/italy_torrc')
+    assert get_torrc_filepath() == './files/italy_torrc'

@@ -13,6 +13,7 @@
 
 from invoke import task
 import os
+import os.path
 import re
 import typing
 
@@ -21,6 +22,33 @@ countries_nodes = {'belgium': 'be', 'france': 'fr', 'italy': 'it', 'japan': 'jp'
                    'spain': 'sp', 'switzerland': 'ch', 'usa': 'us'}
 nodes_countries = {'be': 'Belgium', 'ch': 'Switzerland', 'fr': 'France', 
                    'it': 'Italy', 'jp': 'Japan', 'sp': 'Spain', 'us': 'USA'}
+torrc_filepath = ''
+
+def set_torrc_filepath(torrc: str | os.PathLike) -> bool:
+    """
+       Set the torrc file path.
+
+       :param torrc: The path of the torrc file.
+       :type torrc: str | os.PathLike
+
+       :return: True if file path is set else False
+       :rtype: bool
+    """
+    global torrc_filepath
+    if os.path.exists(torrc):
+        torrc_filepath = torrc
+        return True
+    else:
+        return False
+
+def get_torrc_filepath() -> str | os.PathLike:
+    """
+       Return the torrc file path.
+
+       :return: The path of the torrc file
+       :rtype: str | os.PathLike
+    """
+    return torrc_filepath
 
 def get_node_from_country(country: str) -> str:
     """
