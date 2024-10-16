@@ -7,9 +7,33 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
+python-dotenv = "^1.0.1"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.3.3"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.6.9"
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+   "E", # pycodestyle errors
+   "W", # pycodestyle warnings
+   "F", # pyflakes
+   "I", # isort
+   "B", # flake8-bugbear
+   "C4", # flake8-comprehensions
+   "N", # PEP8 naming conventions
+   "D" # pydocstyle
+]
+ignore = [
+   "C901", # too complex
+   "W191", # indentation contains tabs
+   "D401" # imperative mood
+]
 
 [build-system]
 requires = ["poetry-core"]
