@@ -6,7 +6,7 @@
 ## TL;DR ##
 If you prefer a one-line command, the following will solve your problem:
 
-`sed 's/ExitNodes {[a-zA-Z]\+}/ExitNodes {us}/1' torrc > torrc`
+`sed -i 's/ExitNodes {[a-zA-Z]\+}/ExitNodes {us}/1' torrc`
 
 This command will replace the current exit node with a node in the USA.
 
